@@ -1,0 +1,5 @@
+Step 0 : Delete any alder image Docker that has the name my-postgres
+Step 1 : docker run --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_USER=myuser -e POSTGRES_DB=rental_management -p 5432:5432 -d postgres
+Step 2 : Docker ps (Check)
+Step 3 : docker exec -it my-postgres psql -U myuser -d rental_management
+Step 4 : copy the database script and execute it 
