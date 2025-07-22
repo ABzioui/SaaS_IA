@@ -10,6 +10,8 @@ import ResetPassword from '../pages/ResetPassword';
 import Profile from '../pages/Profile';
 import Admin from '../pages/Admin';
 import Home from '../pages/Home';
+import Dashboard from '../pages/Dashboard';
+import PageVitrine from '../pages/PageVitrine';
 
 const AppRoutes = () => (
   <Routes>
@@ -19,6 +21,12 @@ const AppRoutes = () => (
     <Route path="/reset-password" element={<ResetPassword />} />
     <Route element={<ProtectedRoute />}>
       <Route path="/profile" element={<Profile />} />
+    </Route>
+    <Route element={<ProtectedRoute requiredRole="proprietaire" />}>
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Route>
+    <Route element={<ProtectedRoute requiredRole="locataire" />}>
+      <Route path="/page-vitrine" element={<PageVitrine />} />
     </Route>
     <Route element={<ProtectedRoute requiredRole="proprietaire" />}>
       <Route path="/admin" element={<Admin />} />

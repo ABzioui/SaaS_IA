@@ -35,8 +35,18 @@ const Register = () => {
     setLoading(true);
     setError(null);
     try {
-      await register(form);
-      navigate('/');
+      const res = await register(form);
+      if (res && res.user) {
+        if (res.user.role === 'proprietaire') {
+          navigate('/dashboard');
+        } else if (res.user.role === 'locataire') {
+          navigate('/page-vitrine');
+        } else {
+          navigate('/');
+        }
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError(err.message || 'Registration failed');
     } finally {

@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +21,18 @@ const Login = () => {
     setLoading(true);
     setError(null);
     try {
-      await login(email, password);
-      navigate('/');
+      const res = await login(email, password);
+      if (res && res.user) {
+        if (res.user.role === 'proprietaire') {
+          navigate('/dashboard');
+        } else if (res.user.role === 'locataire') {
+          navigate('/page-vitrine');
+        } else {
+          navigate('/');
+        }
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError(err.message || 'Login failed');
     } finally {
